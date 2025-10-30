@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{TITLE}}</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <style>
+        /* Styles specific to the car detail page */
+        body {
+            background-color: var(--bg, #0b0e14);
+            color: var(--text, #eef1f5);
+        }
+        .car-detail-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+        }
+        .left-column, .right-column {
+            background-color: var(--surface, #141821);
+            padding: 30px;
+            border-radius: 12px;
+        }
+        .car-detail-container {
+            grid-template-columns: 1fr; /* Stack columns on smaller screens */
+        }
+    }
+    .main-image-container {
+        position: relative;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+    #main-car-image {
+        width: 100%;
+        height: auto;
+        display: block;
+        border-radius: 8px;
+    }
+    .main-image-container .prev-btn, .main-image-container .next-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        cursor: pointer;
+        border-radius: 50%;
+        font-size: 20px;
+    }
+    .main-image-container .prev-btn { left: 10px; }
+    .main-image-container .next-btn { right: 10px; }
+    .image-counter {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        background-color: rgba(0, 0, 0, 0.7);
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+    .thumbnail-scroller {
+        margin-top: 15px;
+        overflow-x: auto;
+    }
+    .thumbnail-container {
+        display: flex;
+        gap: 10px;
+        padding-bottom: 10px;
+    }
+    .thumbnail-item {
+        flex: 0 0 100px;
+        cursor: pointer;
+        border: 2px solid transparent;
+        border-radius: 6px;
+        overflow: hidden;
+        transition: border-color 0.3s;
+    }
+    .thumbnail-item.active {
+        border-color: var(--brand, #ff6a00);
+    }
+    .thumbnail-item img {
+        width: 100%;
+        display: block;
+    }
+    .description-box {
+        margin-top: 30px;
+    }
+    .description-box h3 {
+        color: var(--brand, #ff6a00);
+        margin-bottom: 15px;
+    }
+    .description-box ul {
+        list-style: disc;
+        padding-left: 20px;
+    }
+    .description-box ul li {
+        margin-bottom: 8px;
+    }
+    .right-column h1 {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+    }
+    .price {
+        font-size: 2rem;
+        font-weight: bold;
+        color: var(--brand, #ff6a00);
+        margin-bottom: 25px;
+    }
+    .specs-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+        background-color: rgba(0,0,0,0.2);
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 30px;
+    }
+    .spec-item {
+        background: transparent;
+        padding: 10px;
+    }
+    .spec-item .label {
+        font-weight: bold;
+        color: var(--muted, #aab4c3);
+    }
+    .spec-item .value {
+        color: var(--text, #eef1f5);
+    }
+    .contact-form-container {
+        background-color: var(--surface, #141821);
+        padding: 30px;
+        border-radius: 12px;
+        margin-top: 20px;
+    }
+    .contact-form-container h3 {
+        text-align: center;
+        color: var(--brand, #ff6a00);
+        margin-bottom: 20px;
+    }
+    #contact-form label {
+        display: block;
+        margin-bottom: 5px;
+        color: var(--muted, #aab4c3);
+    }
+    #contact-form input, #contact-form textarea {
+        width: 100%;
+        padding: 12px;
+        background-color: var(--bg, #0b0e14);
+        border: 1px solid var(--stroke, #2a2a2d);
+        border-radius: 6px;
+        color: var(--text, #eef1f5);
+        margin-bottom: 15px;
+    }
+    #contact-form .btn-primary {
+        width: 100%;
+        padding: 15px;
+        background-color: var(--brand, #ff6a00);
+        border: none;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 6px;
+    }
+    </style>
+</head>
+<body>
+    <header id="header-placeholder"></header>
+
+    <main class="car-detail-container">
+        <div class="left-column">
+            <div class="main-image-container">
+                <img id="main-car-image" src="{{MAIN_IMAGE_SRC}}" alt="{{TITLE}}">
+                <button class="prev-btn">&lt;</button>
+                <button class="next-btn">&gt;</button>
+                <div class="image-counter" id="image-counter-display">1 / {{IMAGE_COUNT}}</div>
+            </div>
+            <div class="thumbnail-scroller">
+                <div class="thumbnail-container" id="thumbnail-gallery">
+                    {{THUMBNAILS}}
+                </div>
+            </div>
+            <div class="description-box">
+                <h3>Description</h3>
+                <ul>
+                    {{DESCRIPTION_LIST}}
+                </ul>
+            </div>
+        </div>
+        <div class="right-column">
+            <h1>{{H1}}</h1>
+            <p class="price">{{PRICE}}</p>
+
+            <div class="specs-grid">
+                {{SPECS}}
+            </div>
+
+            <div class="contact-form-container">
+                <h3>Contact Us</h3>
+                <form id="contact-form">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required>
+
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+
+                    <label for="phone">Phone</label>
+                    <input type="tel" id="phone" name="phone">
+
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" rows="5" required></textarea>
+
+                    <button type="submit" class="btn-primary">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer id="footer-placeholder"></footer>
+    <script src="../assets/js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mainImage = document.getElementById('main-car-image');
+            const thumbnails = document.querySelectorAll('.thumbnail-item');
+            const imageCounter = document.getElementById('image-counter-display');
+            const totalImages = thumbnails.length;
+            let currentIndex = 0;
+
+            function updateGallery(index) {
+                if (!mainImage || thumbnails.length === 0) return;
+
+                // Update main image
+                mainImage.src = thumbnails[index].querySelector('img').src.replace('thumbs/', '');
+
+                // Update active thumbnail
+                thumbnails.forEach(thumb => thumb.classList.remove('active'));
+                thumbnails[index].classList.add('active');
+
+                // Update counter
+                if (imageCounter) {
+                    imageCounter.textContent = `${index + 1} / ${totalImages}`;
+                }
+
+                currentIndex = index;
+            }
+
+            thumbnails.forEach((thumbnail, index) => {
+                thumbnail.addEventListener('click', () => updateGallery(index));
+            });
+
+            document.querySelector('.next-btn').addEventListener('click', () => {
+                let nextIndex = (currentIndex + 1) % totalImages;
+                updateGallery(nextIndex);
+            });
+
+            document.querySelector('.prev-btn').addEventListener('click', () => {
+                let prevIndex = (currentIndex - 1 + totalImages) % totalImages;
+                updateGallery(prevIndex);
+            });
+
+            // Contact form submission
+            const contactForm = document.getElementById('contact-form');
+            if(contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    alert('Thank you for your message! We will get back to you shortly.');
+                    contactForm.reset();
+                });
+            }
+
+            // Initial setup
+            if (thumbnails.length > 0) {
+                updateGallery(0);
+            }
+        });
+    </script>
+</body>
+</html>

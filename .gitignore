@@ -1,0 +1,10 @@
+# IDE / Editor specific
+.idea/
+.vscode/
+
+# Environment
+venv/
+jules-scratch/
+
+# Application files
+config.php
