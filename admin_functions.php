@@ -182,6 +182,9 @@ function applyThemeToMainSite($themeVars, $fixTemplateOnce = true) {
         json_encode($themeVars, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT)
     );
 
+    // Bust the browser cache by updating a version file
+    file_put_contents('theme_version.txt', time());
+
     return true;
 }
 
@@ -301,6 +304,14 @@ function downloadImages($imageUrls, $targetFolder) {
 function generateCarPage($carData) {
     $template = file_get_contents('template.html');
 
+    // Add cache-busting version to CSS link to reflect theme changes
+    $themeVersion = file_exists('theme_version.txt') ? trim(file_get_contents('theme_version.txt')) : '1';
+    $template = str_replace(
+        'href="../assets/css/styles.css"',
+        'href="../assets/css/styles.css?v=' . $themeVersion . '"',
+        $template
+    );
+
     // Basic fields
     $title = htmlspecialchars($carData['title']);
     $price = '$' . number_format(floatval(str_replace(',', '', $carData['price'])), 0, '.', ',');
@@ -320,7 +331,7 @@ function generateCarPage($carData) {
     }
 
     // Create a JS-safe array of image filenames for the new gallery script
-    $imageSourcesJsArray = json_encode($images);
+    $imageSourcesJsArray = implode(",", array_map(function($img) { return '"' . addslashes($img) . '"'; }, $images));
 
     // Description list
     $descriptionListHtml = "";

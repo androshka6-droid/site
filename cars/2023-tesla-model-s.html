@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2023 Tesla Model S</title>
+    <link rel="stylesheet" href="../assets/css/styles.css?v=1">
+    <style>
+        /* Styles specific to the car detail page */
+        body {
+            background-color: var(--bg, #0b0e14);
+            color: var(--text, #eef1f5);
+        }
+        .car-detail-container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        .content-column {
+            background-color: var(--surface, #141821);
+            padding: 30px;
+            border-radius: 12px;
+        }
+        .main-image-container {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+        #main-car-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 8px;
+        }
+        .main-image-container .prev-btn, .main-image-container .next-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 50%;
+            font-size: 20px;
+            transition: background-color 0.2s;
+        }
+        .main-image-container .prev-btn:hover, .main-image-container .next-btn:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+        .main-image-container .prev-btn { left: 10px; }
+        .main-image-container .next-btn { right: 10px; }
+        .image-counter {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .thumbnail-scroller {
+            overflow-x: auto;
+            margin-bottom: 30px;
+        }
+        .thumbnail-container {
+            display: flex;
+            gap: 10px;
+            padding-bottom: 10px;
+        }
+        .thumbnail-item {
+            flex: 0 0 120px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            border-radius: 6px;
+            overflow: hidden;
+            transition: border-color 0.3s, transform 0.2s;
+        }
+        .thumbnail-item:hover {
+            transform: scale(1.05);
+        }
+        .thumbnail-item.active {
+            border-color: var(--brand, #ff6a00);
+        }
+        .thumbnail-item img {
+            width: 100%;
+            display: block;
+        }
+        .description-box {
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px solid var(--stroke, #2a2a2d);
+        }
+        .description-box h3 {
+            color: var(--brand, #ff6a00);
+            margin-bottom: 15px;
+        }
+        .description-box ul {
+            list-style: disc;
+            padding-left: 20px;
+        }
+        .description-box ul li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+        .content-column h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        .price {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--brand, #ff6a00);
+            margin-bottom: 20px;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .action-btn {
+            flex: 1;
+            padding: 15px 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-decoration: none;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+        .action-btn:hover {
+            transform: translateY(-2px);
+        }
+        .btn-call {
+            background-color: var(--brand, #ff6a00);
+            color: #fff;
+        }
+        .btn-message {
+            background-color: var(--surface-darker, #000); /* A darker shade */
+            color: var(--text, #eef1f5);
+            border: 1px solid var(--stroke, #2a2a2d);
+        }
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            background-color: rgba(0,0,0,0.2);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        .spec-item {
+            background: transparent;
+            padding: 10px;
+            border-bottom: 1px solid var(--stroke, #2a2a2d);
+        }
+        .spec-item .label {
+            font-weight: bold;
+            color: var(--muted, #aab4c3);
+            font-size: 0.9em;
+        }
+        .spec-item .value {
+            color: var(--text, #eef1f5);
+            font-size: 1.1em;
+        }
+        .contact-form-container {
+            background-color: var(--surface, #141821);
+            padding: 30px;
+            border-radius: 12px;
+            margin-top: 40px;
+        }
+        .contact-form-container h3 {
+            text-align: center;
+            color: var(--brand, #ff6a00);
+            margin-bottom: 20px;
+        }
+        #contact-form label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--muted, #aab4c3);
+        }
+        #contact-form input, #contact-form textarea {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--bg, #0b0e14);
+            border: 1px solid var(--stroke, #2a2a2d);
+            border-radius: 6px;
+            color: var(--text, #eef1f5);
+            margin-bottom: 15px;
+        }
+        #contact-form .btn-primary {
+            width: 100%;
+            padding: 15px;
+            background-color: var(--brand, #ff6a00);
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+<body>
+    <header id="header-placeholder"></header>
+
+    <main class="car-detail-container">
+        <div class="content-column">
+            <!-- Image Gallery -->
+            <div class="main-image-container">
+                <img id="main-car-image" src="../assets/images/tesla-model-s-red.jpg" alt="2023 Tesla Model S">
+                <button class="prev-btn">&lt;</button>
+                <button class="next-btn">&gt;</button>
+                <div class="image-counter" id="image-counter-display">1 / 2</div>
+            </div>
+            <div class="thumbnail-scroller">
+                <div class="thumbnail-container" id="thumbnail-gallery">
+                    <div class='thumbnail-item active' data-index='0'>
+  <img src='../assets/images/tesla-model-s-red.jpg' alt='2023 Tesla Model S thumbnail'>
+</div>
+<div class='thumbnail-item ' data-index='1'>
+  <img src='../assets/images/tesla-model-s-interior.jpg' alt='2023 Tesla Model S thumbnail'>
+</div>
+
+                </div>
+            </div>
+
+            <!-- Vehicle Info -->
+            <h1>2023 Tesla Model S</h1>
+            <p class="price">$75,000</p>
+
+            <div class="action-buttons">
+                <a href="tel:+1234567890" class="action-btn btn-call">Call Us</a>
+                <a href="#contact-form-container" class="action-btn btn-message">Send a Message</a>
+            </div>
+
+            <div class="specs-grid">
+                <div class='spec-item'><div class='label'>Year</div><div class='value'>2023</div></div>
+<div class='spec-item'><div class='label'>Make</div><div class='value'>Tesla</div></div>
+<div class='spec-item'><div class='label'>Model</div><div class='value'>Model S</div></div>
+<div class='spec-item'><div class='label'>Mileage</div><div class='value'>15,000 mi</div></div>
+<div class='spec-item'><div class='label'>Engine</div><div class='value'>Electric</div></div>
+<div class='spec-item'><div class='label'>Transmission</div><div class='value'>Automatic</div></div>
+<div class='spec-item'><div class='label'>Drive</div><div class='value'>N/A</div></div>
+<div class='spec-item'><div class='label'>Exterior Color</div><div class='value'>Red</div></div>
+<div class='spec-item'><div class='label'>Interior Color</div><div class='value'>Black</div></div>
+<div class='spec-item'><div class='label'>Fuel</div><div class='value'>N/A</div></div>
+<div class='spec-item'><div class='label'>VIN</div><div class='value'>5YJSA1E2XLF123456</div></div>
+<div class='spec-item'><div class='label'>Title</div><div class='value'>Clear</div></div>
+
+            </div>
+
+            <!-- Description -->
+            <div class="description-box">
+                <h3>Description</h3>
+                <ul>
+                    <li>This is a beautiful Tesla Model S with low mileage.</li>
+
+                </ul>
+            </div>
+        </div>
+
+        <!-- Contact Form Section -->
+        <div id="contact-form-container" class="contact-form-container">
+            <h3>Contact Us About This Vehicle</h3>
+            <form id="contact-form">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="phone">Phone</label>
+                <input type="tel" id="phone" name="phone">
+
+                <label for="message">Message</label>
+                <textarea id="message" name="message" rows="5" required>I am interested in this 2023 Tesla Model S.</textarea>
+
+                <button type="submit" class="btn-primary">Send Message</button>
+            </form>
+        </div>
+    </main>
+
+    <footer id="footer-placeholder"></footer>
+    <script src="../assets/js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Smooth scroll for the message button
+            const messageBtn = document.querySelector('.btn-message');
+            if(messageBtn) {
+                messageBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            }
+
+            const mainImage = document.getElementById('main-car-image');
+            const thumbnails = document.querySelectorAll('.thumbnail-item');
+            const imageCounter = document.getElementById('image-counter-display');
+            const totalImages = thumbnails.length;
+            let currentIndex = 0;
+
+            const imageSources = ["tesla-model-s-red.jpg","tesla-model-s-interior.jpg"];
+
+            function updateGallery(index) {
+                if (!mainImage || thumbnails.length === 0) return;
+
+                mainImage.src = `../assets/images/${imageSources[index]}`;
+
+                thumbnails.forEach(thumb => thumb.classList.remove('active'));
+                thumbnails[index].classList.add('active');
+                thumbnails[index].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+
+                if (imageCounter) {
+                    imageCounter.textContent = `${index + 1} / ${totalImages}`;
+                }
+
+                currentIndex = index;
+            }
+
+            thumbnails.forEach((thumbnail, index) => {
+                thumbnail.addEventListener('click', () => updateGallery(index));
+            });
+
+            document.querySelector('.next-btn').addEventListener('click', () => {
+                let nextIndex = (currentIndex + 1) % totalImages;
+                updateGallery(nextIndex);
+            });
+
+            document.querySelector('.prev-btn').addEventListener('click', () => {
+                let prevIndex = (currentIndex - 1 + totalImages) % totalImages;
+                updateGallery(prevIndex);
+            });
+
+            const contactForm = document.getElementById('contact-form');
+            if(contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    alert('Thank you for your message! We will get back to you shortly.');
+                    contactForm.reset();
+                });
+            }
+
+            if (thumbnails.length > 0) {
+                updateGallery(0);
+            }
+        });
+    </script>
+</body>
+</html>
