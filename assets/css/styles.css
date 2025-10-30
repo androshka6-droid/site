@@ -1,26 +1,26 @@
 :root {
-    --bg: #ffffff;
-    --surface: #f8f9fa;
-    --text: #1a1a1a;
-    --muted: #666666;
-    --brand: #ff6a00;
-    --brand2: #ff9140;
-    --card: #ffffff;
-    --stroke: rgba(0,0,0,.12);
-    --input-bg: #ffffff;
-    --media-bg: #ece6ff;
+    --bg: #1a1a1a;
+    --surface: #2a2a2a;
+    --text: #ffffff;
+    --muted: #a0a0a0;
+    --brand: #ff8c00;
+    --brand2: #ffa500;
+    --card: #2c2c2c;
+    --stroke: rgba(255,255,255,.12);
+    --input-bg: #3a3a3a;
+    --media-bg: #3c3c3c;
     --btn-primary-text: #ffffff;
-    --btn-primary-dark: #e55a00;
-    --btn-primary-border: #cc5000;
-    --header-bg: rgba(255,255,255,.95);
-    --footer-bg: rgba(248, 249, 250, 0.95);
-    --nav-mobile-bg: rgba(255,255,255,.98);
-    --glow-shadow: 0 0 28px rgba(255,106,0,.35);
+    --btn-primary-dark: #e07b00;
+    --btn-primary-border: #c76e00;
+    --header-bg: rgba(26,26,26,.95);
+    --footer-bg: rgba(36, 36, 36, 0.95);
+    --nav-mobile-bg: rgba(26,26,26,.98);
+    --glow-shadow: 0 0 28px rgba(255,140,0,.35);
 }
 
 /* Global Styles */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
     background-color: var(--bg);
@@ -52,6 +52,26 @@ body {
 .social-media a {
     color: #fff;
     margin-left: 10px;
+    transition: color 0.3s ease;
+}
+
+.social-media a:hover {
+    color: var(--brand);
+}
+
+.theme-toggle-btn {
+    background: none;
+    border: none;
+    color: var(--text);
+    cursor: pointer;
+    font-size: 16px;
+    margin-left: 15px;
+    padding: 0;
+    transition: color 0.3s ease;
+}
+
+.theme-toggle-btn:hover {
+    color: var(--brand);
 }
 
 .main-header {
@@ -79,6 +99,12 @@ body {
     border-radius: 5px 0 0 5px;
     background-color: var(--input-bg);
     color: var(--text);
+    transition: border-color 0.3s ease;
+}
+
+.search-bar input:focus {
+    outline: none;
+    border-color: var(--brand);
 }
 
 .search-bar button {
@@ -89,6 +115,11 @@ body {
     border-radius: 0 5px 5px 0;
     cursor: pointer;
     color: var(--text);
+    transition: background-color 0.3s ease;
+}
+
+.search-bar button:hover {
+    background-color: var(--brand);
 }
 
 .main-nav {
@@ -114,10 +145,12 @@ body {
     text-decoration: none;
     color: var(--text);
     font-weight: bold;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .main-nav a:hover {
-    background-color: var(--stroke);
+    background-color: var(--brand);
+    color: var(--btn-primary-text);
 }
 
 /* Hero Section */
@@ -129,6 +162,7 @@ body {
     color: #fff;
     padding: 100px 0;
     text-align: center;
+    animation: fadeIn 1s ease-in-out;
 }
 
 .hero h1 {
@@ -144,10 +178,16 @@ body {
 .search-form input {
     padding: 15px;
     width: 60%;
-    border: none;
+    border: 1px solid var(--stroke);
     border-radius: 5px 0 0 5px;
     background-color: var(--input-bg);
     color: var(--text);
+    transition: border-color 0.3s ease;
+}
+
+.search-form input:focus {
+    outline: none;
+    border-color: var(--brand);
 }
 
 .search-form button {
@@ -157,6 +197,11 @@ body {
     color: var(--btn-primary-text);
     border-radius: 0 5px 5px 0;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.search-form button:hover {
+    background-color: var(--btn-primary-dark);
 }
 
 /* Featured Vehicles Section */
@@ -173,13 +218,20 @@ body {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     grid-gap: 20px;
+    animation: fadeIn 1s ease-in-out;
 }
 
 .vehicle-card {
     border: 1px solid var(--stroke);
-    border-radius: 5px;
+    border-radius: 8px;
     overflow: hidden;
     background-color: var(--card);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.vehicle-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
 }
 
 .vehicle-card img {
@@ -227,6 +279,7 @@ footer {
 .footer-section a {
     color: var(--brand2);
     text-decoration: none;
+    transition: color 0.3s ease;
 }
 
 .footer-section a:hover {
@@ -264,9 +317,17 @@ footer {
     padding: 15px;
     margin-bottom: 20px;
     border: 1px solid var(--stroke);
-    border-radius: 5px;
+    border-radius: 8px;
     background-color: var(--input-bg);
     color: var(--text);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+    outline: none;
+    border-color: var(--brand);
+    box-shadow: 0 0 10px rgba(255,140,0,0.5);
 }
 
 .contact-form button {
@@ -274,18 +335,21 @@ footer {
     border: none;
     background-color: var(--brand);
     color: var(--btn-primary-text);
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
     box-shadow: var(--glow-shadow);
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .contact-form button:hover {
     background-color: var(--btn-primary-dark);
+    transform: scale(1.05);
 }
 
 /* Vehicle Detail Page Styles */
 .vehicle-detail-page {
     padding: 40px 0;
+    animation: fadeIn 1s ease-in-out;
 }
 .detail-header {
     display: flex;
@@ -327,6 +391,7 @@ footer {
     overflow: hidden;
     width: 80px;
     height: 60px;
+    transition: border-color 0.3s ease;
 }
 .thumb img {
     width: 100%;
@@ -334,7 +399,7 @@ footer {
     object-fit: cover;
     display: block;
 }
-.thumb.active {
+.thumb.active, .thumb:hover {
     border-color: var(--brand);
 }
 
@@ -362,4 +427,179 @@ footer {
     color: var(--brand);
     font-size: 2em;
     font-weight: bold;
+}
+
+/* About Us Page Styles */
+.about-us {
+    padding: 50px 0;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.about-us h2 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.meet-the-team {
+    padding: 50px 0;
+    background-color: var(--surface);
+}
+
+.meet-the-team h2 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-gap: 20px;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.team-member {
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.team-member:hover {
+    transform: scale(1.05);
+}
+
+.team-member img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+    border: 3px solid var(--brand);
+}
+
+.team-member h3 {
+    margin: 0;
+}
+
+.team-member p {
+    color: var(--muted);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Contact Page Styles */
+.contact-page {
+    padding: 50px 0;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.contact-page h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.contact-page p {
+    text-align: center;
+    margin-bottom: 40px;
+    color: var(--muted);
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 40px;
+}
+
+.contact-info-section h3 {
+    color: var(--brand);
+    margin-bottom: 15px;
+}
+
+.map {
+    margin-top: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Inventory Page Styles */
+.inventory-page {
+    padding: 50px 0;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.inventory-page h2 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.filter-sort-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    background-color: var(--surface);
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.filter-options select,
+.sort-options select {
+    padding: 10px;
+    border: 1px solid var(--stroke);
+    border-radius: 8px;
+    background-color: var(--input-bg);
+    color: var(--text);
+    margin-right: 10px;
+    transition: border-color 0.3s ease;
+}
+
+.filter-options select:focus,
+.sort-options select:focus {
+    outline: none;
+    border-color: var(--brand);
+}
+
+/* Testimonials Page Styles */
+.testimonials-page {
+    padding: 50px 0;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.testimonials-page h2 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-gap: 20px;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.testimonial-card {
+    background-color: var(--surface);
+    padding: 30px;
+    border-radius: 8px;
+    border-left: 5px solid var(--brand);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+.customer-name {
+    font-weight: bold;
+    color: var(--brand);
+    text-align: right;
 }

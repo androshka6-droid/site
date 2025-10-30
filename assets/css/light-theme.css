@@ -1,0 +1,20 @@
+body.light-theme {
+    --bg: #ffffff;
+    --surface: #f8f9fa;
+    --text: #212529;
+    --muted: #6c757d;
+    --card: #ffffff;
+    --stroke: rgba(0,0,0,.12);
+    --input-bg: #e9ecef;
+    --header-bg: rgba(255,255,255,.95);
+    --footer-bg: rgba(248, 249, 250, 0.95);
+    --nav-mobile-bg: rgba(255,255,255,.98);
+}
+
+body.light-theme .social-media a {
+    color: var(--text);
+}
+
+body.light-theme .social-media a:hover {
+    color: var(--brand);
+}
