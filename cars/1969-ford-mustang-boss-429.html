@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{TITLE}}</title>
+    <title>1969 Ford Mustang Boss 429</title>
     <link rel="stylesheet" href="../assets/css/styles.css">
     <style>
         /* Styles specific to the car detail page */
@@ -12,7 +12,7 @@
             color: var(--text, #eef1f5);
         }
         .car-detail-container {
-            max-width: 1000px;
+            max-width: 1000px; /* Adjusted max-width for a single column */
             margin: 40px auto;
             padding: 20px;
         }
@@ -25,7 +25,7 @@
             position: relative;
             border-radius: 8px;
             overflow: hidden;
-            margin-bottom: 15px;
+            margin-bottom: 15px; /* Space between main image and thumbnails */
         }
         #main-car-image {
             width: 100%;
@@ -63,7 +63,7 @@
         }
         .thumbnail-scroller {
             overflow-x: auto;
-            margin-bottom: 30px;
+            margin-bottom: 30px; /* Space between gallery and title */
         }
         .thumbnail-container {
             display: flex;
@@ -71,7 +71,7 @@
             padding-bottom: 10px;
         }
         .thumbnail-item {
-            flex: 0 0 120px;
+            flex: 0 0 120px; /* Slightly larger thumbnails */
             cursor: pointer;
             border: 2px solid transparent;
             border-radius: 6px;
@@ -113,34 +113,7 @@
             font-size: 2rem;
             font-weight: bold;
             color: var(--brand, #ff6a00);
-            margin-bottom: 20px;
-        }
-        .action-buttons {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-        .action-btn {
-            flex: 1;
-            padding: 15px 20px;
-            border-radius: 8px;
-            text-align: center;
-            font-size: 1.1rem;
-            font-weight: bold;
-            text-decoration: none;
-            transition: transform 0.2s, background-color 0.2s;
-        }
-        .action-btn:hover {
-            transform: translateY(-2px);
-        }
-        .btn-call {
-            background-color: var(--brand, #ff6a00);
-            color: #fff;
-        }
-        .btn-message {
-            background-color: var(--surface-darker, #000); /* A darker shade */
-            color: var(--text, #eef1f5);
-            border: 1px solid var(--stroke, #2a2a2d);
+            margin-bottom: 25px;
         }
         .specs-grid {
             display: grid;
@@ -169,7 +142,7 @@
             background-color: var(--surface, #141821);
             padding: 30px;
             border-radius: 12px;
-            margin-top: 40px;
+            margin-top: 40px; /* More space before contact form */
         }
         .contact-form-container h3 {
             text-align: center;
@@ -209,41 +182,55 @@
         <div class="content-column">
             <!-- Image Gallery -->
             <div class="main-image-container">
-                <img id="main-car-image" src="{{MAIN_IMAGE_SRC}}" alt="{{TITLE}}">
+                <img id="main-car-image" src="../assets/images/placeholder1.jpg" alt="1969 Ford Mustang Boss 429">
                 <button class="prev-btn">&lt;</button>
                 <button class="next-btn">&gt;</button>
-                <div class="image-counter" id="image-counter-display">1 / {{IMAGE_COUNT}}</div>
+                <div class="image-counter" id="image-counter-display">1 / 2</div>
             </div>
             <div class="thumbnail-scroller">
                 <div class="thumbnail-container" id="thumbnail-gallery">
-                    {{THUMBNAILS}}
+                    <div class='thumbnail-item active' data-index='0'>
+  <img src='../assets/images/placeholder1.jpg' alt='1969 Ford Mustang Boss 429 thumbnail'>
+</div>
+<div class='thumbnail-item ' data-index='1'>
+  <img src='../assets/images/placeholder2.jpg' alt='1969 Ford Mustang Boss 429 thumbnail'>
+</div>
+
                 </div>
             </div>
 
             <!-- Vehicle Info -->
-            <h1>{{H1}}</h1>
-            <p class="price">{{PRICE}}</p>
-
-            <div class="action-buttons">
-                <a href="tel:+1234567890" class="action-btn btn-call">Call Us</a>
-                <a href="#contact-form-container" class="action-btn btn-message">Send a Message</a>
-            </div>
+            <h1>1969 Ford Mustang Boss 429</h1>
+            <p class="price">$275,000</p>
 
             <div class="specs-grid">
-                {{SPECS}}
+                <div class='spec-item'><div class='label'>Year</div><div class='value'>1969</div></div>
+<div class='spec-item'><div class='label'>Make</div><div class='value'>Ford</div></div>
+<div class='spec-item'><div class='label'>Model</div><div class='value'>Mustang</div></div>
+<div class='spec-item'><div class='label'>Mileage</div><div class='value'>54,000 mi</div></div>
+<div class='spec-item'><div class='label'>Engine</div><div class='value'>429 cu in (7.0 L) V8</div></div>
+<div class='spec-item'><div class='label'>Transmission</div><div class='value'>4-Speed Manual</div></div>
+<div class='spec-item'><div class='label'>Drive</div><div class='value'>N/A</div></div>
+<div class='spec-item'><div class='label'>Exterior Color</div><div class='value'>Wimbledon White</div></div>
+<div class='spec-item'><div class='label'>Interior Color</div><div class='value'>Black</div></div>
+<div class='spec-item'><div class='label'>Fuel</div><div class='value'>N/A</div></div>
+<div class='spec-item'><div class='label'>VIN</div><div class='value'>9F02Z123456</div></div>
+<div class='spec-item'><div class='label'>Title</div><div class='value'>Clear</div></div>
+
             </div>
 
             <!-- Description -->
             <div class="description-box">
                 <h3>Description</h3>
                 <ul>
-                    {{DESCRIPTION_LIST}}
+                    <li>One of the rarest and most legendary muscle cars ever built. A true collector&#039;s item in pristine condition.</li>
+
                 </ul>
             </div>
         </div>
 
         <!-- Contact Form Section -->
-        <div id="contact-form-container" class="contact-form-container">
+        <div class="contact-form-container">
             <h3>Contact Us About This Vehicle</h3>
             <form id="contact-form">
                 <label for="name">Name</label>
@@ -256,7 +243,7 @@
                 <input type="tel" id="phone" name="phone">
 
                 <label for="message">Message</label>
-                <textarea id="message" name="message" rows="5" required>I am interested in this {{TITLE}}.</textarea>
+                <textarea id="message" name="message" rows="5" required>I am interested in this 1969 Ford Mustang Boss 429.</textarea>
 
                 <button type="submit" class="btn-primary">Send Message</button>
             </form>
@@ -267,34 +254,29 @@
     <script src="../assets/js/main.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Smooth scroll for the message button
-            const messageBtn = document.querySelector('.btn-message');
-            if(messageBtn) {
-                messageBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    document.querySelector(this.getAttribute('href')).scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                });
-            }
-
             const mainImage = document.getElementById('main-car-image');
             const thumbnails = document.querySelectorAll('.thumbnail-item');
             const imageCounter = document.getElementById('image-counter-display');
             const totalImages = thumbnails.length;
             let currentIndex = 0;
 
-            const imageSources = [{{IMAGE_SOURCES_JS_ARRAY}}];
+            // Raw image paths array
+            const imageSources = [
+                ["placeholder1.jpg","placeholder2.jpg"]
+            ];
 
             function updateGallery(index) {
                 if (!mainImage || thumbnails.length === 0) return;
 
+                // Update main image from the sources array
                 mainImage.src = `../assets/images/${imageSources[index]}`;
 
+                // Update active thumbnail
                 thumbnails.forEach(thumb => thumb.classList.remove('active'));
                 thumbnails[index].classList.add('active');
                 thumbnails[index].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
 
+                // Update counter
                 if (imageCounter) {
                     imageCounter.textContent = `${index + 1} / ${totalImages}`;
                 }
@@ -316,6 +298,7 @@
                 updateGallery(prevIndex);
             });
 
+            // Contact form submission
             const contactForm = document.getElementById('contact-form');
             if(contactForm) {
                 contactForm.addEventListener('submit', function(e) {
@@ -325,6 +308,7 @@
                 });
             }
 
+            // Initial setup
             if (thumbnails.length > 0) {
                 updateGallery(0);
             }
