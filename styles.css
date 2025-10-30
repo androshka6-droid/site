@@ -1,8 +1,30 @@
-/* styles.css */
+:root {
+    --bg: #ffffff;
+    --surface: #f8f9fa;
+    --text: #1a1a1a;
+    --muted: #666666;
+    --brand: #ff6a00;
+    --brand2: #ff9140;
+    --card: #ffffff;
+    --stroke: rgba(0,0,0,.12);
+    --input-bg: #ffffff;
+    --media-bg: #ece6ff;
+    --btn-primary-text: #ffffff;
+    --btn-primary-dark: #e55a00;
+    --btn-primary-border: #cc5000;
+    --header-bg: rgba(255,255,255,.95);
+    --footer-bg: rgba(248, 249, 250, 0.95);
+    --nav-mobile-bg: rgba(255,255,255,.98);
+    --glow-shadow: 0 0 28px rgba(255,106,0,.35);
+}
+
+/* Global Styles */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+    background-color: var(--bg);
+    color: var(--text);
 }
 
 .container {
@@ -10,6 +32,7 @@ body {
     margin: 0 auto;
 }
 
+/* Header */
 .top-bar {
     background-color: #333;
     color: #fff;
@@ -33,6 +56,7 @@ body {
 
 .main-header {
     padding: 20px 0;
+    background-color: var(--header-bg);
 }
 
 .main-header .container {
@@ -51,23 +75,26 @@ body {
 
 .search-bar input {
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--stroke);
     border-radius: 5px 0 0 5px;
+    background-color: var(--input-bg);
+    color: var(--text);
 }
 
 .search-bar button {
     padding: 10px;
-    border: 1px solid #ccc;
-    background-color: #f0f0f0;
+    border: 1px solid var(--stroke);
+    background-color: var(--surface);
     border-left: none;
     border-radius: 0 5px 5px 0;
     cursor: pointer;
+    color: var(--text);
 }
 
 .main-nav {
-    background-color: #f8f8f8;
-    border-top: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
+    background-color: var(--surface);
+    border-top: 1px solid var(--stroke);
+    border-bottom: 1px solid var(--stroke);
 }
 
 .main-nav ul {
@@ -85,12 +112,12 @@ body {
     display: block;
     padding: 15px 20px;
     text-decoration: none;
-    color: #333;
+    color: var(--text);
     font-weight: bold;
 }
 
 .main-nav a:hover {
-    background-color: #ddd;
+    background-color: var(--stroke);
 }
 
 /* Hero Section */
@@ -119,13 +146,15 @@ body {
     width: 60%;
     border: none;
     border-radius: 5px 0 0 5px;
+    background-color: var(--input-bg);
+    color: var(--text);
 }
 
 .search-form button {
     padding: 15px;
     border: none;
-    background-color: #337ab7;
-    color: #fff;
+    background-color: var(--brand);
+    color: var(--btn-primary-text);
     border-radius: 0 5px 5px 0;
     cursor: pointer;
 }
@@ -147,9 +176,10 @@ body {
 }
 
 .vehicle-card {
-    border: 1px solid #ccc;
+    border: 1px solid var(--stroke);
     border-radius: 5px;
     overflow: hidden;
+    background-color: var(--card);
 }
 
 .vehicle-card img {
@@ -167,13 +197,15 @@ body {
     padding: 0 15px 15px;
     margin: 0;
     font-weight: bold;
+    color: var(--brand);
 }
 
 /* Footer */
 footer {
-    background-color: #333;
-    color: #fff;
+    background-color: var(--footer-bg);
+    color: var(--text);
     padding: 50px 0 0;
+    border-top: 1px solid var(--stroke);
 }
 
 .footer-content {
@@ -184,6 +216,7 @@ footer {
 
 .footer-section h3 {
     margin-bottom: 20px;
+    color: var(--brand);
 }
 
 .footer-section ul {
@@ -192,28 +225,34 @@ footer {
 }
 
 .footer-section a {
-    color: #fff;
+    color: var(--brand2);
     text-decoration: none;
 }
 
+.footer-section a:hover {
+    color: var(--brand);
+}
+
 .footer-bottom {
-    background-color: #222;
+    background-color: var(--surface);
     padding: 20px;
     text-align: center;
     margin-top: 50px;
+    border-top: 1px solid var(--stroke);
 }
 
 /* Contact Form */
-.contact-form {
+.contact-form-section {
     padding: 50px 0;
 }
 
-.contact-form h2 {
+.contact-form-section h2 {
     text-align: center;
     margin-bottom: 30px;
+    color: var(--brand);
 }
 
-.contact-form form {
+.contact-form {
     display: flex;
     flex-direction: column;
     width: 60%;
@@ -224,15 +263,103 @@ footer {
 .contact-form textarea {
     padding: 15px;
     margin-bottom: 20px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--stroke);
     border-radius: 5px;
+    background-color: var(--input-bg);
+    color: var(--text);
 }
 
 .contact-form button {
     padding: 15px;
     border: none;
-    background-color: #337ab7;
-    color: #fff;
+    background-color: var(--brand);
+    color: var(--btn-primary-text);
     border-radius: 5px;
     cursor: pointer;
+    box-shadow: var(--glow-shadow);
+}
+
+.contact-form button:hover {
+    background-color: var(--btn-primary-dark);
+}
+
+/* Vehicle Detail Page Styles */
+.vehicle-detail-page {
+    padding: 40px 0;
+}
+.detail-header {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+.album-column {
+    flex: 1;
+    min-width: 300px;
+    max-width: 600px;
+}
+.detail-info {
+    flex: 1;
+    min-width: 300px;
+}
+.viewer {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--media-bg);
+}
+.viewer img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+.thumbs {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+}
+.thumb {
+    flex: 0 0 auto;
+    border: 2px solid transparent;
+    border-radius: 6px;
+    cursor: pointer;
+    overflow: hidden;
+    width: 80px;
+    height: 60px;
+}
+.thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+.thumb.active {
+    border-color: var(--brand);
+}
+
+.description-box {
+    margin-top: 20px;
+    padding: 20px;
+    background: var(--surface);
+    border-radius: 12px;
+    border: 1px solid var(--stroke);
+}
+.description-box h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--brand);
+    margin-bottom: 12px;
+}
+.specs .spec {
+    background: color-mix(in srgb, var(--brand) 10%, transparent);
+    border: 1px solid var(--stroke);
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+.price {
+    color: var(--brand);
+    font-size: 2em;
+    font-weight: bold;
 }
