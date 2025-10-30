@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vehicle — Lone Star Auto</title>
+  <meta name="description" content="View vehicle details, photos, specs, and request info." />
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  
+<header class="header">
+  <div class="container nav">
+    <div class="logo"><img src="assets/logo.svg" alt="Lone Star Auto" height="34" style="display:block" /></div>
+    <nav class="nav-links"><a href='index.html' class=''>Home</a>
+        <a href='inventory.html' class=''>Inventory</a>
+        <a href='about.html' class=''>About</a>
+        <a href='delivery.html' class=''>Delivery</a>
+        <a href='testimonials.html' class=''>Testimonials</a>
+        <a href='contact.html' class=''>Contact</a></nav>
+    <a class="btn outline" href="tel:+15125550199">Call</a>
+    <button class="btn outline" data-theme-toggle title="Toggle theme">🌙</button>
+  </div>
+</header>
+  <section class="section">
+    <div class="container">
+      <nav class="muted" style="margin-bottom:8px"><a href="index.html">Home</a> › <a href="inventory.html">Inventory</a> › <span id="crumb"></span></nav>
+      <h1 id="title">Vehicle</h1>
+      <p class="lead" id="subtitle"></p>
+
+      <div class="grid" style="grid-template-columns:1.2fr .8fr">
+        <div>
+          <div class="hero-art" style="margin-bottom:12px">
+            <img id="main-img" alt="Vehicle photo" />
+          </div>
+          <div id="thumbs" style="display:flex;gap:10px;flex-wrap:wrap"></div>
+
+          <div class="card" style="margin-top:16px">
+            <div class="card-body">
+              <div class="title-row"><strong>Highlights</strong></div>
+              <div id="highlights" class="tags"></div>
+            </div>
+          </div>
+
+          <div class="card" style="margin-top:16px">
+            <div class="card-body">
+              <div class="title-row"><strong>Description</strong></div>
+              <p id="desc" class="muted">Clean title, inspected and ready to drive. Ask us about extended coverage and delivery options.</p>
+            </div>
+          </div>
+        </div>
+
+        <aside style="display:flex;flex-direction:column;gap:12px">
+          <div class="card">
+            <div class="card-body">
+              <div class="title-row"><strong>Price</strong><span id="price" class="price"></span></div>
+              <div class="specs" style="margin-top:10px">
+                <div>Year: <strong id="year"></strong></div>
+                <div>Odometer: <strong id="miles"></strong></div>
+                <div>Fuel: <strong id="fuel"></strong></div>
+                <div>Transmission: <strong id="trans"></strong></div>
+                <div>VIN: <strong id="vin"></strong></div>
+                <div>Stock #: <strong id="stock"></strong></div>
+              </div>
+              <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+                <a href="contact.html" class="btn primary">Request info</a>
+                <a href="delivery.html" class="btn">How delivery works</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-body">
+              <div class="title-row"><strong>Share</strong></div>
+              <div style="display:flex;gap:8px;margin-top:8px">
+                <a id="share-fb" class="btn outline">Facebook</a>
+                <a id="share-tw" class="btn outline">Twitter</a>
+                <button class="btn" id="btn-copy">Copy link</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-body">
+              <div class="title-row"><strong>Similar vehicles</strong></div>
+              <div id="similar" class="grid cards" style="margin-top:12px;grid-template-columns:1fr"></div>
+            </div>
+          </div>
+        </aside>
+      </div>
+      <div style="margin-top:20px"><a class="btn" href="inventory.html">← Back to inventory</a></div>
+    </div>
+  </section>
+
+  
+<footer>
+  <div class="container" style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap">
+    <div>© <span>2025</span> Lone Star Auto. All rights reserved.</div>
+    <div class="muted">VIN checks • Test drives • Nationwide delivery</div>
+  </div>
+</footer>
+  <script src="assets/inventory.js"></script>
+  <script src="assets/theme.js"></script>
+  <script>
+    const money = n => n.toLocaleString('en-US',{style:'currency',currency:'USD'});
+    const miles = n => `${n.toLocaleString('en-US')} mi`;
+
+    const params = new URLSearchParams(location.search);
+    const qid = params.get('id');
+    let car = null;
+    if(qid) car = CARS.find(x => String(x.extId) === String(qid));
+    if(!car) car = CARS[0];
+
+    document.getElementById('title').textContent = `${car.year} ${car.make} ${car.model}`;
+    document.getElementById('crumb').textContent = `${car.make} ${car.model}`;
+    document.getElementById('subtitle').textContent = `${car.make} • ${car.model}`;
+    document.getElementById('main-img').src = car.images?.[0] || car.image;
+    document.getElementById('price').textContent = money(car.price);
+    document.getElementById('year').textContent = car.year;
+    document.getElementById('miles').textContent = miles(car.mileage);
+    document.getElementById('fuel').textContent = car.fuel;
+    document.getElementById('trans').textContent = car.transmission;
+    document.getElementById('vin').textContent = car.vin || '—';
+    document.getElementById('stock').textContent = car.stock || '—';
+
+    const thumbs = document.getElementById('thumbs');
+    (car.images?.length ? car.images : [car.image]).forEach((src, i) => {
+      const a = document.createElement('a');
+      a.href = '#'; a.className = 'hero-art'; a.style.width = '120px';
+      a.innerHTML = `<img src="${src}" alt="Photo ${i+1}" />`;
+      a.addEventListener('click', (e)=>{ e.preventDefault(); document.getElementById('main-img').src = src; });
+      thumbs.appendChild(a);
+    });
+
+    document.getElementById('highlights').innerHTML = car.features.map(f=>`<span class="chip">${f}</span>`).join('');
+
+    const similar = CARS.filter(x => x.id !== car.id && (x.make === car.make || x.fuel === car.fuel)).slice(0,3);
+    document.getElementById('similar').innerHTML = similar.map(item => `
+      <article class="card">
+        <div class="card-media"><img src="${item.image}" alt="${item.make} ${item.model}" /></div>
+        <div class="card-body">
+          <div class="title-row"><strong>${item.make} ${item.model}</strong> <span class="price">${money(item.price)}</span></div>
+          <div class="specs"><div>Odometer: <strong>${miles(item.mileage)}</strong></div><div>Year: <strong>${item.year}</strong></div></div>
+        </div>
+        <div class="card-foot"><a class="btn" href="vehicle.html?id=${item.extId || item.id}">View vehicle</a></div>
+      </article>
+    `).join('');
+
+    const u = encodeURIComponent(location.href);
+    document.getElementById('share-fb').href = `https://www.facebook.com/sharer/sharer.php?u=${u}`;
+    document.getElementById('share-tw').href = `https://twitter.com/intent/tweet?url=${u}`;
+    document.getElementById('btn-copy').addEventListener('click', async () => {
+      try { await navigator.clipboard.writeText(location.href); alert('Link copied'); } catch(e){ console.log(e); }
+    });
+
+    const ld = {
+      "@context":"https://schema.org",
+      "@type":"Vehicle",
+      "name": `${car.year} ${car.make} ${car.model}`,
+      "brand": car.make,
+      "model": car.model,
+      "vehicleModelDate": String(car.year),
+      "mileageFromOdometer": {"@type":"QuantitativeValue","value": car.mileage,"unitCode":"SMI"},
+      "fuelType": car.fuel,
+      "vehicleTransmission": car.transmission,
+      "sku": car.stock,
+      "mpn": car.vin,
+      "offers": {"@type":"Offer","price": car.price,"priceCurrency":"USD","availability":"https://schema.org/InStock","url": location.href}
+    };
+    const s = document.createElement('script'); s.type='application/ld+json'; s.textContent = JSON.stringify(ld);
+    document.head.appendChild(s);
+  </script>
+</body>
+</html>
