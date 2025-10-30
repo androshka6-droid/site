@@ -14,7 +14,18 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     };
 
-    // Load header and then initialize theme toggle
+    // Function to initialize burger menu
+    const initBurgerMenu = () => {
+        const burgerButton = document.getElementById("burger-menu");
+        const nav = document.querySelector(".main-nav");
+        if (burgerButton && nav) {
+            burgerButton.addEventListener("click", () => {
+                nav.classList.toggle("active");
+            });
+        }
+    };
+
+    // Load header and then initialize theme toggle and burger menu
     fetch("templates/header.html")
         .then(response => response.text())
         .then(data => {
@@ -33,6 +44,9 @@ document.addEventListener("DOMContentLoaded", function() {
             // Apply the saved theme on page load
             const savedTheme = localStorage.getItem("theme") || "dark";
             setTheme(savedTheme);
+
+            // Initialize burger menu
+            initBurgerMenu();
         });
 
     // Load footer

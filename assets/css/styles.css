@@ -94,6 +94,15 @@ body {
     color: var(--btn-primary-text);
 }
 
+.burger-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--text);
+    cursor: pointer;
+    font-size: 24px;
+}
+
 /* Hero Section */
 .hero {
     background-color: #333;
@@ -228,7 +237,7 @@ footer {
 .contact-form {
     display: flex;
     flex-direction: column;
-    width: 60%;
+    width: 100%;
     margin: 0 auto;
 }
 
@@ -266,260 +275,31 @@ footer {
     transform: scale(1.05);
 }
 
-/* Vehicle Detail Page Styles */
-.vehicle-detail-page {
-    padding: 40px 0;
-    animation: fadeIn 1s ease-in-out;
-}
-.detail-header {
-    display: flex;
-    gap: 30px;
-    flex-wrap: wrap;
-}
-.album-column {
-    flex: 1;
-    min-width: 300px;
-    max-width: 600px;
-}
-.detail-info {
-    flex: 1;
-    min-width: 300px;
-}
-.viewer {
-    position: relative;
-    border-radius: 8px;
-    overflow: hidden;
-    background: var(--media-bg);
-}
-.viewer img {
-    width: 100%;
-    height: auto;
-    display: block;
-}
-.thumbs {
-    display: flex;
-    gap: 8px;
-    margin-top: 10px;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-}
-.thumb {
-    flex: 0 0 auto;
-    border: 2px solid transparent;
-    border-radius: 6px;
-    cursor: pointer;
-    overflow: hidden;
-    width: 80px;
-    height: 60px;
-    transition: border-color 0.3s ease;
-}
-.thumb img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-}
-.thumb.active, .thumb:hover {
-    border-color: var(--brand);
-}
-
-.description-box {
-    margin-top: 20px;
-    padding: 20px;
-    background: var(--surface);
-    border-radius: 12px;
-    border: 1px solid var(--stroke);
-}
-.description-box h2 {
-    font-size: 22px;
-    font-weight: 700;
-    color: var(--brand);
-    margin-bottom: 12px;
-}
-.specs .spec {
-    background: color-mix(in srgb, var(--brand) 10%, transparent);
-    border: 1px solid var(--stroke);
-    border-radius: 10px;
-    padding: 10px;
-    margin-bottom: 10px;
-}
-.price {
-    color: var(--brand);
-    font-size: 2em;
-    font-weight: bold;
-}
-
-/* About Us Page Styles */
-.about-us {
-    padding: 50px 0;
-    animation: fadeIn 1s ease-in-out;
-}
-
-.about-us h2 {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.meet-the-team {
-    padding: 50px 0;
-    background-color: var(--surface);
-}
-
-.meet-the-team h2 {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.team-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    grid-gap: 20px;
-    animation: fadeIn 1s ease-in-out;
-}
-
-.team-member {
-    text-align: center;
-    transition: transform 0.3s ease;
-}
-
-.team-member:hover {
-    transform: scale(1.05);
-}
-
-.team-member img {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-bottom: 15px;
-    border: 3px solid var(--brand);
-}
-
-.team-member h3 {
-    margin: 0;
-}
-
-.team-member p {
-    color: var(--muted);
-}
-
-/* Animations */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .main-nav {
+        display: none;
+        position: absolute;
+        top: 80px;
+        left: 0;
+        width: 100%;
+        background-color: var(--nav-mobile-bg);
     }
-    to {
-        opacity: 1;
-        transform: translateY(0);
+
+    .main-nav.active {
+        display: block;
     }
-}
 
-/* Contact Page Styles */
-.contact-page {
-    padding: 50px 0;
-    animation: fadeIn 1s ease-in-out;
-}
+    .main-nav ul {
+        flex-direction: column;
+        align-items: center;
+    }
 
-.contact-page h2 {
-    text-align: center;
-    margin-bottom: 20px;
-}
+    .burger-menu-btn {
+        display: block;
+    }
 
-.contact-page p {
-    text-align: center;
-    margin-bottom: 40px;
-    color: var(--muted);
-}
-
-.contact-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 40px;
-}
-
-.contact-info-section h3 {
-    color: var(--brand);
-    margin-bottom: 15px;
-}
-
-.map {
-    margin-top: 20px;
-    border-radius: 8px;
-    overflow: hidden;
-}
-
-/* Inventory Page Styles */
-.inventory-page {
-    padding: 50px 0;
-    animation: fadeIn 1s ease-in-out;
-}
-
-.inventory-page h2 {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.filter-sort-section {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
-    background-color: var(--surface);
-    padding: 20px;
-    border-radius: 8px;
-}
-
-.filter-options select,
-.sort-options select {
-    padding: 10px;
-    border: 1px solid var(--stroke);
-    border-radius: 8px;
-    background-color: var(--input-bg);
-    color: var(--text);
-    margin-right: 10px;
-    transition: border-color 0.3s ease;
-}
-
-.filter-options select:focus,
-.sort-options select:focus {
-    outline: none;
-    border-color: var(--brand);
-}
-
-/* Testimonials Page Styles */
-.testimonials-page {
-    padding: 50px 0;
-    animation: fadeIn 1s ease-in-out;
-}
-
-.testimonials-page h2 {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.testimonial-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    grid-gap: 20px;
-    animation: fadeIn 1s ease-in-out;
-}
-
-.testimonial-card {
-    background-color: var(--surface);
-    padding: 30px;
-    border-radius: 8px;
-    border-left: 5px solid var(--brand);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.testimonial-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-}
-
-.customer-name {
-    font-weight: bold;
-    color: var(--brand);
-    text-align: right;
+    .footer-content {
+        grid-template-columns: 1fr;
+    }
 }
