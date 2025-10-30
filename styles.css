@@ -1,0 +1,238 @@
+/* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.top-bar {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 0;
+}
+
+.top-bar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.contact-info span {
+    margin-right: 20px;
+}
+
+.social-media a {
+    color: #fff;
+    margin-left: 10px;
+}
+
+.main-header {
+    padding: 20px 0;
+}
+
+.main-header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo img {
+    max-width: 200px;
+}
+
+.search-bar form {
+    display: flex;
+}
+
+.search-bar input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px 0 0 5px;
+}
+
+.search-bar button {
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: #f0f0f0;
+    border-left: none;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+}
+
+.main-nav {
+    background-color: #f8f8f8;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
+
+.main-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.main-nav li {
+    margin-right: 20px;
+}
+
+.main-nav a {
+    display: block;
+    padding: 15px 20px;
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+.main-nav a:hover {
+    background-color: #ddd;
+}
+
+/* Hero Section */
+.hero {
+    background-image: url('https://via.placeholder.com/1920x1080');
+    background-color: #333;
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    padding: 100px 0;
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: 3em;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+}
+
+.search-form input {
+    padding: 15px;
+    width: 60%;
+    border: none;
+    border-radius: 5px 0 0 5px;
+}
+
+.search-form button {
+    padding: 15px;
+    border: none;
+    background-color: #337ab7;
+    color: #fff;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+}
+
+/* Featured Vehicles Section */
+.featured-vehicles {
+    padding: 50px 0;
+}
+
+.featured-vehicles h2 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.vehicle-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-gap: 20px;
+}
+
+.vehicle-card {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.vehicle-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.vehicle-card h3 {
+    padding: 15px;
+    margin: 0;
+}
+
+.vehicle-card p {
+    padding: 0 15px 15px;
+    margin: 0;
+    font-weight: bold;
+}
+
+/* Footer */
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 50px 0 0;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-gap: 20px;
+}
+
+.footer-section h3 {
+    margin-bottom: 20px;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-section a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.footer-bottom {
+    background-color: #222;
+    padding: 20px;
+    text-align: center;
+    margin-top: 50px;
+}
+
+/* Contact Form */
+.contact-form {
+    padding: 50px 0;
+}
+
+.contact-form h2 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.contact-form form {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    margin: 0 auto;
+}
+
+.contact-form input,
+.contact-form textarea {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.contact-form button {
+    padding: 15px;
+    border: none;
+    background-color: #337ab7;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+}
