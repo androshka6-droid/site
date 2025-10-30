@@ -53,6 +53,6 @@ document.addEventListener("DOMContentLoaded", function() {
             document.getElementById("footer-placeholder").innerHTML = data;
         });
 
-    // Apply cache-busting
-    bustCache();
+    // Apply cache-busting after the entire window has loaded
+    window.onload = bustCache;
 });
