@@ -462,37 +462,37 @@ function generateCarCard($carData) {
 // Обновление публичных страниц (inventory.html и index.html)
 function updatePublicListings() {
     $db = loadDB('cars_db.json');
+    if (!file_exists('inventory.template.html') || !file_exists('index.template.html')) {
+        // Можно добавить логирование ошибки, если шаблоны отсутствуют
+        return;
+    }
     $inventoryTemplate = file_get_contents('inventory.template.html');
     $indexTemplate = file_get_contents('index.template.html');
-
-    // Загрузка хедера и футера
-    $headerContent = file_get_contents('templates/header.html');
-    $footerContent = file_get_contents('templates/footer.html');
 
     // Сортируем машины по убыванию (новые вверху)
     krsort($db);
 
     $allCardsHtml = "";
-    foreach ($db as $car) {
-        $allCardsHtml .= generateCarCard($car);
+    if (is_array($db) && !empty($db)) {
+        foreach ($db as $car) {
+            $allCardsHtml .= generateCarCard($car);
+        }
     }
 
     // Обновляем inventory.html
     $newInventoryHtml = str_replace('{{CAR_GRID_PLACEHOLDER}}', $allCardsHtml, $inventoryTemplate);
-    $newInventoryHtml = str_replace('<div id="header-placeholder"></div>', $headerContent, $newInventoryHtml);
-    $newInventoryHtml = str_replace('<div id="footer-placeholder"></div>', $footerContent, $newInventoryHtml);
     file_put_contents('inventory.html', $newInventoryHtml);
 
-    // Обновляем index.html
+    // Обновляем index.html (первые 3 машины)
     $featuredCars = array_slice($db, 0, 3);
     $featuredCardsHtml = "";
-    foreach ($featuredCars as $car) {
-        $featuredCardsHtml .= generateCarCard($car);
+    if (is_array($featuredCars) && !empty($featuredCars)) {
+        foreach ($featuredCars as $car) {
+            $featuredCardsHtml .= generateCarCard($car);
+        }
     }
 
     $newIndexHtml = str_replace('{{FEATURED_CARS_PLACEHOLDER}}', $featuredCardsHtml, $indexTemplate);
-    $newIndexHtml = str_replace('<div id="header-placeholder"></div>', $headerContent, $newIndexHtml);
-    $newIndexHtml = str_replace('<div id="footer-placeholder"></div>', $footerContent, $newIndexHtml);
     file_put_contents('index.html', $newIndexHtml);
 }
 ?>
