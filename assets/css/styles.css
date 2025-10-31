@@ -1,4 +1,4 @@
-:root{--bg:#f0f8ff;--surface:#e6f3ff;--text:#0d1b2a;--muted:#4a5f7f;--brand:#0077b6;--brand2:#00b4d8;--shadow:0 10px 28px rgba(0,0,0,.35);--maxw:1200px;--card:#e6f3ff;--stroke:rgba(0,0,0,.12);--input-bg:#ffffff;--media-bg:#ece6ff;--media-bg-2:#e9e1ff;--media-bg-3:#e3d9ff;--gallery-bg:#ece6ff;--btn-primary-text:#ffffff;--btn-primary-dark:#6a22a6;--btn-primary-border:#6822a2;--heading:#0d1b2a;--price:#0077b6;--btn:#0077b6;--btn-text:#ffffff;--glow-shadow:0 0 28px rgba(123,44,191,.35);--header-bg:rgba(255,255,255,.95);--footer-bg:rgba(255,255,255,.75);--nav-mobile-bg:rgba(255,255,255,.98);--gradient-1:#f5ecff;--gradient-2:#ece0ff;}
+:root{--bg:#f0f8ff;--surface:#e6f3ff;--text:#0d1b2a;--muted:#4a5f7f;--brand:#0077b6;--brand2:#00b4d8;--shadow:0 10px 28px rgba(0,0,0,.35);--maxw:1200px;--card:#e6f3ff;--stroke:rgba(0,0,0,.12);--input-bg:#ffffff;--media-bg:#ece6ff;--media-bg-2:#e9e1ff;--media-bg-3:#e3d9ff;--gallery-bg:#ece6ff;--btn-primary-text:#ffffff;--heading:#0d1b2a;--price:#0077b6;--btn:#0077b6;--btn-text:#ffffff;--glow-shadow:0 0 28px rgba(123,44,191,.35);--header-bg:rgba(255,255,255,.95);--footer-bg:rgba(255,255,255,.75);--nav-mobile-bg:rgba(255,255,255,.98);--gradient-1:#f5ecff;--gradient-2:#ece0ff;}
 
 /* Global Styles */
 body {
@@ -64,16 +64,19 @@ body {
 
 .main-nav a {
     display: block;
-    padding: 15px 20px;
+    padding: 10px 20px;
     text-decoration: none;
     color: var(--text);
     font-weight: bold;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    border: 2px solid transparent;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 .main-nav a:hover {
     background-color: var(--brand);
     color: var(--btn-primary-text);
+    border-color: var(--brand);
 }
 
 .burger-menu-btn {
@@ -111,7 +114,7 @@ body {
 }
 
 .btn-hero:hover {
-    background-color: var(--btn-primary-dark);
+    filter: brightness(85%);
     transform: scale(1.05);
 }
 
@@ -253,7 +256,7 @@ footer {
 }
 
 .contact-form button:hover {
-    background-color: var(--btn-primary-dark);
+    filter: brightness(85%);
     transform: scale(1.05);
 }
 
