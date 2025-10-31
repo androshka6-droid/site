@@ -295,24 +295,29 @@ function downloadImages($imageUrls, $targetFolder) {
 
         $ch = curl_init($url);
         $fp = fopen($filepath, 'wb');
-        curl_setopt($ch, CURLOPT_FILE, fp);
+        curl_setopt($ch, CURLOPT_FILE, $fp);
         curl_setopt($ch, CURLOPT_HEADER, 0);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 60); // Увеличен до 60 секунд на картинку
+        curl_setopt($ch, CURLOPT_TIMEOUT, 60);
         curl_exec($ch);
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $error = curl_error($ch);
         curl_close($ch);
         fclose($fp);
 
-        if (file_exists($filepath) && filesize($filepath) > 0 && $httpCode == 200) {
-            // Сжимаем изображение
+        if ($httpCode == 200 && file_exists($filepath) && filesize($filepath) > 0) {
             $compressedFilename = compressImage($filepath);
             if ($compressedFilename) {
                 $downloaded[] = $compressedFilename;
             } else {
-                $downloaded[] = $filename;
+                $downloaded[] = $filename; // Fallback to original if compression fails
             }
         } else {
+            // Log error
+            $logMessage = "Failed to download image from URL: $url\n";
+            $logMessage .= "HTTP Code: $httpCode\n";
+            $logMessage .= "cURL Error: $error\n";
+            file_put_contents('image_download_log.txt', $logMessage, FILE_APPEND);
             @unlink($filepath);
         }
     }
@@ -324,13 +329,13 @@ function downloadImages($imageUrls, $targetFolder) {
 function generateCarPage($carData) {
     $template = file_get_contents('template.html');
 
-    // Add cache-busting version to CSS link to reflect theme changes
-    $themeVersion = file_exists('theme_version.txt') ? trim(file_get_contents('theme_version.txt')) : '1';
-    $template = str_replace(
-        'href="../assets/css/styles.css"',
-        'href="../assets/css/styles.css?v=' . $themeVersion . '"',
-        $template
-    );
+    // Загрузка хедера и футера
+    $headerContent = file_get_contents('templates/header.html');
+    $footerContent = file_get_contents('templates/footer.html');
+
+    // Замена плейсхолдеров
+    $template = str_replace('<header id="header-placeholder"></header>', $headerContent, $template);
+    $template = str_replace('<footer id="footer-placeholder"></footer>', $footerContent, $template);
 
     // Basic fields
     $title = htmlspecialchars($carData['title']);
@@ -458,6 +463,11 @@ function generateCarCard($carData) {
 function updatePublicListings() {
     $db = loadDB('cars_db.json');
     $inventoryTemplate = file_get_contents('inventory.template.html');
+    $indexTemplate = file_get_contents('index.template.html');
+
+    // Загрузка хедера и футера
+    $headerContent = file_get_contents('templates/header.html');
+    $footerContent = file_get_contents('templates/footer.html');
 
     // Сортируем машины по убыванию (новые вверху)
     krsort($db);
@@ -469,10 +479,11 @@ function updatePublicListings() {
 
     // Обновляем inventory.html
     $newInventoryHtml = str_replace('{{CAR_GRID_PLACEHOLDER}}', $allCardsHtml, $inventoryTemplate);
+    $newInventoryHtml = str_replace('<div id="header-placeholder"></div>', $headerContent, $newInventoryHtml);
+    $newInventoryHtml = str_replace('<div id="footer-placeholder"></div>', $footerContent, $newInventoryHtml);
     file_put_contents('inventory.html', $newInventoryHtml);
 
     // Обновляем index.html
-    $indexTemplate = file_get_contents('index.template.html');
     $featuredCars = array_slice($db, 0, 3);
     $featuredCardsHtml = "";
     foreach ($featuredCars as $car) {
@@ -480,6 +491,8 @@ function updatePublicListings() {
     }
 
     $newIndexHtml = str_replace('{{FEATURED_CARS_PLACEHOLDER}}', $featuredCardsHtml, $indexTemplate);
+    $newIndexHtml = str_replace('<div id="header-placeholder"></div>', $headerContent, $newIndexHtml);
+    $newIndexHtml = str_replace('<div id="footer-placeholder"></div>', $footerContent, $newIndexHtml);
     file_put_contents('index.html', $newIndexHtml);
 }
 ?>
