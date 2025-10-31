@@ -66,17 +66,18 @@ body {
     display: block;
     padding: 10px 20px;
     text-decoration: none;
-    color: var(--text);
+    color: var(--btn-text);
+    background-color: var(--btn);
     font-weight: bold;
-    border: 2px solid transparent;
+    border: 2px solid var(--btn);
     border-radius: 5px;
-    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, filter 0.3s ease;
 }
 
 .main-nav a:hover {
-    background-color: var(--brand);
-    color: var(--btn-primary-text);
-    border-color: var(--brand);
+    filter: brightness(85%);
+    color: var(--btn-text);
+    border-color: var(--btn);
 }
 
 .burger-menu-btn {
@@ -102,20 +103,28 @@ body {
     animation: fadeIn 1s ease-in-out;
 }
 
-.btn-hero {
-    background-color: var(--brand);
-    color: var(--btn-primary-text);
+.btn {
+    background-color: var(--btn);
+    color: var(--btn-text);
     padding: 15px 30px;
     text-decoration: none;
     font-weight: bold;
+    border: none;
     border-radius: 5px;
-    transition: background-color 0.3s ease, transform 0.3s ease;
+    cursor: pointer;
+    transition: filter 0.3s ease, transform 0.3s ease;
     box-shadow: var(--glow-shadow);
 }
 
-.btn-hero:hover {
+.btn:hover {
     filter: brightness(85%);
     transform: scale(1.05);
+}
+
+.btn-secondary {
+    background-color: var(--surface);
+    color: var(--text);
+    border: 1px solid var(--stroke);
 }
 
 /* Featured Vehicles Section */
@@ -245,19 +254,8 @@ footer {
 }
 
 .contact-form button {
-    padding: 15px;
-    border: none;
-    background-color: var(--brand);
-    color: var(--btn-primary-text);
-    border-radius: 8px;
-    cursor: pointer;
-    box-shadow: var(--glow-shadow);
-    transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-.contact-form button:hover {
-    filter: brightness(85%);
-    transform: scale(1.05);
+    /* All styles are now inherited from the .btn class */
+    /* Add any specific overrides here if needed in the future */
 }
 
 /* Responsive Styles */

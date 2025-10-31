@@ -1874,9 +1874,10 @@ if (isset($_SESSION['preview_data']) && !$previewData) {
                     <p class="car-price">$<?php echo number_format(floatval(str_replace(',', '', $car['price'])), 0, '.', ','); ?></p>
                     <p class="car-meta"><?php echo htmlspecialchars($car['year']); ?> • <?php echo number_format(intval(str_replace(',', '', $car['mileage'])), 0, '.', ','); ?> miles</p>
                     <div class="car-actions">
-                        <a href="cars/<?php echo $car['slug']; ?>.html" target="_blank" class="btn-view">Просмотр</a>
-                        <a href="?edit=<?php echo $carId; ?>" class="btn-edit">Редактировать</a>
-                        <a href="?delete=<?php echo $carId; ?>" class="btn-delete" onclick="return confirm('Удалить эту машину?')">Удалить</a>
+                        <a href="cars/<?php echo $car['slug']; ?>.html" target="_blank" class="btn-view">View Page</a>
+                        <a href="preview.php?id=<?php echo $carId; ?>" target="_blank" class="btn-preview">Preview</a>
+                        <a href="?edit=<?php echo $carId; ?>" class="btn-edit">Edit</a>
+                        <a href="?delete=<?php echo $carId; ?>" class="btn-delete" onclick="return confirm('Are you sure you want to delete this car?')">Delete</a>
                     </div>
                 </div>
             </div>

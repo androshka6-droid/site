@@ -403,7 +403,7 @@ function generateCarCard($carData) {
     $year = $carData['year'];
     $price = floatval(str_replace(',', '', $carData['price']));
     $mileage = intval(str_replace(',', '', $carData['mileage']));
-    $mainImage = 'images/' . $carData['images'][0];
+    $mainImage = 'assets/images/' . $carData['images'][0];
     $filename = $carData['slug'] . '.html';
 
     $priceFormatted = number_format($price, 0, '.', ',');
@@ -421,7 +421,7 @@ function generateCarCard($carData) {
     $keywords = strtolower("$year {$carData['make']} {$carData['model']}");
 
     $cardHtml = '<a href="cars/' . $filename . '" class="vehicle-card" data-era="' . $era . '" data-keywords="' . $keywords . '" data-car-id="' . $carData['id'] . '">' . "\n";
-    $cardHtml .= '  <div class="vehicle-media" style="background-image: url(\'assets/' . $mainImage . '\');"></div>' . "\n";
+    $cardHtml .= '  <div class="vehicle-media" style="background-image: url(\'' . $mainImage . '\');"></div>' . "\n";
     $cardHtml .= '  <div class="vehicle-body">' . "\n";
     $cardHtml .= '    <h3>' . htmlspecialchars($title) . '</h3>' . "\n";
     $cardHtml .= '    <p>' . htmlspecialchars($meta) . '</p>' . "\n";

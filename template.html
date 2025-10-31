@@ -120,28 +120,6 @@
             gap: 15px;
             margin-bottom: 30px;
         }
-        .action-btn {
-            flex: 1;
-            padding: 15px 20px;
-            border-radius: 8px;
-            text-align: center;
-            font-size: 1.1rem;
-            font-weight: bold;
-            text-decoration: none;
-            transition: transform 0.2s, background-color 0.2s;
-        }
-        .action-btn:hover {
-            transform: translateY(-2px);
-        }
-        .btn-call {
-            background-color: var(--brand, #ff6a00);
-            color: #fff;
-        }
-        .btn-message {
-            background-color: var(--surface-darker, #000); /* A darker shade */
-            color: var(--text, #eef1f5);
-            border: 1px solid var(--stroke, #2a2a2d);
-        }
         .specs-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -225,8 +203,8 @@
             <p class="price">{{PRICE}}</p>
 
             <div class="action-buttons">
-                <a href="tel:+1234567890" class="action-btn btn-call">Call Us</a>
-                <a href="#contact-form-container" class="action-btn btn-message">Send a Message</a>
+                <a href="tel:+1234567890" class="btn">Call Us</a>
+                <a href="#contact-form-container" class="btn btn-secondary">Send a Message</a>
             </div>
 
             <div class="specs-grid">
@@ -258,7 +236,7 @@
                 <label for="message">Message</label>
                 <textarea id="message" name="message" rows="5" required>I am interested in this {{TITLE}}.</textarea>
 
-                <button type="submit" class="btn-primary">Send Message</button>
+                <button type="submit" class="btn">Send Message</button>
             </form>
         </div>
     </main>
