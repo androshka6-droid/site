@@ -89,6 +89,20 @@ function applyThemeToMainSite($themeVars, $fixTemplateOnce = true) {
     $brand   = isset($themeVars['accent'])    ? $themeVars['accent']    : '#ff6a00';
     $brand2  = isset($themeVars['accent-2'])  ? $themeVars['accent-2']  : '#ff9140';
 
+    // Конвертируем цвет панели в RGB для создания полупрозрачных версий
+    $hex_panel = str_replace('#', '', $panel);
+    if (strlen($hex_panel) == 3) {
+        $r_panel = hexdec(substr($hex_panel, 0, 1) . substr($hex_panel, 0, 1));
+        $g_panel = hexdec(substr($hex_panel, 1, 1) . substr($hex_panel, 1, 1));
+        $b_panel = hexdec(substr($hex_panel, 2, 1) . substr($hex_panel, 2, 1));
+    } else {
+        $r_panel = hexdec(substr($hex_panel, 0, 2));
+        $g_panel = hexdec(substr($hex_panel, 2, 2));
+        $b_panel = hexdec(substr($hex_panel, 4, 2));
+    }
+    $panel_rgb = "$r_panel,$g_panel,$b_panel";
+
+
     // --- производные/алиасы для страниц (цены/заголовки/кнопки/формы/глоу) ---
     $card      = isset($themeVars['card'])       ? $themeVars['card']       : $panel;
     $stroke    = isset($themeVars['stroke'])     ? $themeVars['stroke']     : 'rgba(0,0,0,.12)';
@@ -101,9 +115,10 @@ function applyThemeToMainSite($themeVars, $fixTemplateOnce = true) {
     $btnDark   = isset($themeVars['btn-primary-dark'])   ? $themeVars['btn-primary-dark']   : '#6a22a6';
     $btnBorder = isset($themeVars['btn-primary-border']) ? $themeVars['btn-primary-border'] : '#6822a2';
 
-    $headerBg  = isset($themeVars['header-bg'])    ? $themeVars['header-bg']    : 'rgba(255,255,255,.95)';
-    $footerBg  = isset($themeVars['footer-bg'])    ? $themeVars['footer-bg']    : 'rgba(255,255,255,.75)';
-    $navMobBg  = isset($themeVars['nav-mobile-bg'])? $themeVars['nav-mobile-bg']: 'rgba(255,255,255,.98)';
+    // Умная генерация фона для хедера/футера на основе цвета панели
+    $headerBg  = isset($themeVars['header-bg'])    ? $themeVars['header-bg']    : 'rgba(' . $panel_rgb . ',.95)';
+    $footerBg  = isset($themeVars['footer-bg'])    ? $themeVars['footer-bg']    : 'rgba(' . $panel_rgb . ',.75)';
+    $navMobBg  = isset($themeVars['nav-mobile-bg'])? $themeVars['nav-mobile-bg']: 'rgba(' . $panel_rgb . ',.98)';
     $grad1     = isset($themeVars['gradient-1'])   ? $themeVars['gradient-1']   : '#f5ecff';
     $grad2     = isset($themeVars['gradient-2'])   ? $themeVars['gradient-2']   : '#ece0ff';
 
@@ -175,13 +190,6 @@ function applyThemeToMainSite($themeVars, $fixTemplateOnce = true) {
     // фиксим template.html: тянет стили сайта и динамический CSS
     if ($fixTemplateOnce && file_exists('template.html')) {
         $tpl = file_get_contents('template.html');
-        // This was a typo fix, but let's ensure the main styles.css is used.
-        // It's better to remove this block as our template.html is now correct.
-        /*
-        if (strpos($tpl, 'href="../style.css"') !== false) {
-            $tpl = str_replace('href="../style.css"', 'href="../styles.css"', $tpl);
-        }
-        */
         if (strpos($tpl, 'href="../theme.css.php"') === false) {
             $tpl = preg_replace('~(<link[^>]+href="\.\./style\.css"[^>]*>)~i', '$1' . "\n" . '<link rel="stylesheet" href="../theme.css.php">', $tpl, 1);
         }
@@ -287,7 +295,7 @@ function downloadImages($imageUrls, $targetFolder) {
 
         $ch = curl_init($url);
         $fp = fopen($filepath, 'wb');
-        curl_setopt($ch, CURLOPT_FILE, $fp);
+        curl_setopt($ch, CURLOPT_FILE, fp);
         curl_setopt($ch, CURLOPT_HEADER, 0);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
         curl_setopt($ch, CURLOPT_TIMEOUT, 60); // Увеличен до 60 секунд на картинку
@@ -446,7 +454,7 @@ function generateCarCard($carData) {
     return $cardHtml;
 }
 
-// Обновление публичных страниц (inventory.html и index.php)
+// Обновление публичных страниц (inventory.html и index.html)
 function updatePublicListings() {
     $db = loadDB('cars_db.json');
     $inventoryTemplate = file_get_contents('inventory.template.html');
@@ -463,7 +471,7 @@ function updatePublicListings() {
     $newInventoryHtml = str_replace('{{CAR_GRID_PLACEHOLDER}}', $allCardsHtml, $inventoryTemplate);
     file_put_contents('inventory.html', $newInventoryHtml);
 
-    // Обновляем index.php - теперь он будет статическим, обновляемым админкой
+    // Обновляем index.html
     $indexTemplate = file_get_contents('index.template.html');
     $featuredCars = array_slice($db, 0, 3);
     $featuredCardsHtml = "";
@@ -472,5 +480,6 @@ function updatePublicListings() {
     }
 
     $newIndexHtml = str_replace('{{FEATURED_CARS_PLACEHOLDER}}', $featuredCardsHtml, $indexTemplate);
-    file_put_contents('index.html', $newIndexHtml); // Сохраняем как index.html
+    file_put_contents('index.html', $newIndexHtml);
 }
+?>

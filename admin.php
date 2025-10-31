@@ -395,8 +395,8 @@ if (isset($_GET['apply_main_theme'])) {
                 'panel' => '#ffe5e5',
                 'text' => '#2d1b1b',
                 'muted' => '#7f5a5a',
-                'accent' => '#ff6b6b',
-                'accent-2' => '#ffa07a'
+                'accent' => '#e55a5a', // Darker for better contrast
+                'accent-2' => '#ff8c61' // More saturated
             ];
             break;
 
@@ -439,8 +439,8 @@ if (isset($_GET['apply_main_theme'])) {
                 'panel' => '#f5f0e8',
                 'text' => '#2d2520',
                 'muted' => '#7f6f5f',
-                'accent' => '#8b6f47',
-                'accent-2' => '#a68a64'
+                'accent' => '#6d5d41', // Darker for better contrast
+                'accent-2' => '#9a8264' // More saturated
             ];
             break;
 

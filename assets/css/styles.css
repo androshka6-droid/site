@@ -320,3 +320,79 @@ body {
         grid-template-columns: 1fr;
     }
 }
+
+/* ==========================================================================
+   Contact Form Section (Above Footer)
+   ========================================================================== */
+
+.contact-form-section {
+    background-color: var(--surface);
+    padding: 80px 0;
+    color: var(--text);
+}
+
+.contact-form-container {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.contact-form-container h2 {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+.contact-form-container .subtitle {
+    font-size: 1.1rem;
+    color: var(--muted);
+    margin-bottom: 40px;
+}
+
+.contact-form .form-group {
+    margin-bottom: 25px;
+}
+
+.contact-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text);
+}
+
+.contact-form input[type=text],
+.contact-form input[type=email],
+.contact-form input[type=tel],
+.contact-form textarea {
+    width: 100%;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid var(--stroke);
+    background-color: var(--input-bg);
+    color: var(--text);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.contact-form input[type=text]:focus,
+.contact-form input[type=email]:focus,
+.contact-form input[type=tel]:focus,
+.contact-form textarea:focus {
+    outline: none;
+    border-color: var(--brand);
+    box-shadow: 0 0 0 3px rgba(var(--brand-rgb), 0.2);
+}
+
+.contact-form textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+/* Update the submit button to use the universal .btn class styling */
+.contact-form .btn {
+    width: 100%;
+    padding: 18px;
+    font-size: 1.1rem;
+    font-weight: 700;
+}
