@@ -278,10 +278,17 @@ function compressImage($sourcePath, $maxWidth = 1920, $quality = 85) {
 // Скачивание изображений
 function downloadImages($imageUrls, $targetFolder) {
     $downloaded = [];
-    if (empty($imageUrls)) return $downloaded;
+    if (empty($imageUrls)) {
+        return $downloaded;
+    }
 
-    $urls = json_decode($imageUrls, true);
-    if (!$urls || !is_array($urls)) return $downloaded;
+    // Универсальная обработка: если это JSON-строка - декодируем, если уже массив - используем
+    $urls = is_array($imageUrls) ? $imageUrls : json_decode($imageUrls, true);
+
+    if (!is_array($urls) || empty($urls)) {
+        // Если после всех проверок у нас не массив или он пуст, выходим
+        return $downloaded;
+    }
 
     foreach ($urls as $index => $url) {
         $url = trim($url);
