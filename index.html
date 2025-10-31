@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale-1.0">
-    <title>Contact Us - Dean's Auto Sales</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Dean's Auto Sales</title>
     <script>
         // Blocking script to prevent FOUC
         (function() {
@@ -35,22 +35,26 @@
 <body>
     <div id="header-placeholder"></div>
     <main>
-        <section class="contact-page">
+        <section class="hero" style="background-image: url('https://placehold.co/1920x1080/2a2a2a/ffffff?text=HERO+IMAGE');">
             <div class="container">
-                <h2>Get in Touch</h2>
-                <p>We'd love to hear from you. Whether you have a question about a vehicle, financing, or anything else, our team is ready to answer all your questions.</p>
-                <div class="contact-form-container">
-                    <form class="contact-form" action="https://formspree.io/f/xoqgebrj" method="POST">
-                        <label for="name">Name</label>
-                        <input type="text" id="name" name="name" placeholder="Your Name" required>
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" placeholder="Your Email" required>
-                        <label for="phone">Phone</label>
-                        <input type="tel" id="phone" name="phone" placeholder="Phone">
-                        <label for="message">Message</label>
-                        <textarea id="message" name="message" placeholder="Your Message" required></textarea>
-                        <button type="submit" class="btn">Send Message</button>
-                    </form>
+                <a href="inventory.html" class="btn">BROWSE INV</a>
+            </div>
+        </section>
+        <section class="featured-vehicles">
+            <div class="container">
+                <h2>Featured Vehicles</h2>
+                <div class="vehicle-grid">
+                    <a href="cars/2023-tesla-model-s.html" class="vehicle-card" data-era="60s" data-keywords="2023 tesla model s" data-car-id="test_car_1">
+  <div class="vehicle-media" style="background-image: url('assets/images/placeholder.jpg');"></div>
+  <div class="vehicle-body">
+    <h3>2023 Tesla Model S</h3>
+    <p>2023 • 100 miles • Automatic</p>
+    <div class="vehicle-meta">
+      <span class="price">&#36;79,990</span>
+    </div>
+  </div>
+</a>
+
                 </div>
             </div>
         </section>

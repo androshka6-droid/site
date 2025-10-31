@@ -1,0 +1,21 @@
+{
+    "test_car_1": {
+        "id": "test_car_1",
+        "title": "2023 Tesla Model S",
+        "make": "Tesla",
+        "model": "Model S",
+        "year": "2023",
+        "price": "79990",
+        "mileage": "100",
+        "vin": "TESTVIN123",
+        "engine": "Electric",
+        "transmission": "Automatic",
+        "exterior_color": "Red",
+        "interior_color": "Black",
+        "description": "A beautiful test car.\nWith low mileage.",
+        "images": [
+            "placeholder.jpg"
+        ],
+        "slug": "2023-tesla-model-s"
+    }
+}

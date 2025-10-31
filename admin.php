@@ -124,8 +124,8 @@ if (isset($_POST['ajax_process_batch']) && isset($_POST['batch_index'])) {
         // Генерируем страницу
         generateCarPage($carData);
 
-        // Добавляем карточку
-        addCardToInventory(generateCarCard($carData));
+        // Обновляем публичные страницы
+        updatePublicListings();
 
         echo json_encode([
             'success' => true,
@@ -171,9 +171,9 @@ if (isset($_GET['delete'])) {
     if (isset($db[$carId])) {
         $car = $db[$carId];
         @unlink("cars/{$car['slug']}.html");
-        removeCardFromInventory($carId);
         unset($db[$carId]);
         saveDB($dbFile, $db);
+        updatePublicListings();
         $message = "✅ Машина {$car['title']} успешно удалена";
     }
 }
@@ -189,18 +189,11 @@ if (isset($_GET['delete_all']) && $_GET['delete_all'] === 'confirm') {
         $deletedCount++;
     }
 
-    // Удаляем все карточки из inventory.html
-    $inventoryHtml = file_get_contents('inventory.html');
-    // Удаляем все карточки с data-car-id
-    $inventoryHtml = preg_replace(
-        '/<a[^>]*data-car-id="[^"]*"[^>]*>.*?<\/a>\s*/s',
-        '',
-        $inventoryHtml
-    );
-    file_put_contents('inventory.html', $inventoryHtml);
-
     // Очищаем базу данных
     saveDB($dbFile, []);
+
+    // Обновляем публичные страницы (которые станут пустыми)
+    updatePublicListings();
 
     $message = "✅ Удалено $deletedCount машин. База данных очищена.";
     header("Location: admin.php?msg=" . urlencode($message));
@@ -280,8 +273,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     $db = loadDB($dbFile);
 
     if (isset($db[$carId])) {
-        removeCardFromInventory($carId);
-
         // Обработка удаления фотографий
         if (isset($_POST['delete_images']) && is_array($_POST['delete_images'])) {
             $deleteIndices = array_map('intval', $_POST['delete_images']);
@@ -321,9 +312,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         $db[$carId]['interior_color'] = $_POST['interior_color'];
         $db[$carId]['description'] = $_POST['description'];
 
-        generateCarPage($db[$carId]);
-        addCardToInventory(generateCarCard($db[$carId]));
         saveDB($dbFile, $db);
+        generateCarPage($db[$carId]);
+        updatePublicListings();
 
         $deletedCount = isset($_POST['delete_images']) ? count($_POST['delete_images']) : 0;
         $message = $deletedCount > 0
@@ -415,19 +406,19 @@ if (isset($_GET['apply_main_theme'])) {
                 'panel' => '#e8f5e8',
                 'text' => '#1b2d1b',
                 'muted' => '#5a7f5a',
-                'accent' => '#2d6a2d',
-                'accent-2' => '#66bb6a'
+                'accent' => '#4CAF50', // Brighter Green
+                'accent-2' => '#81C784' // Lighter Green
             ];
             break;
 
-        case 'purple':
+        case 'platinum': // Replaced Purple
             $templateVars = [
-                'bg' => '#f8f5ff',
-                'panel' => '#f0e6ff',
-                'text' => '#2d1b3d',
-                'muted' => '#7f5a9f',
-                'accent' => '#7b2cbf',
-                'accent-2' => '#9d4edd'
+                'bg' => '#f5f5f5',
+                'panel' => '#e8e8e8',
+                'text' => '#222222',
+                'muted' => '#6c757d',
+                'accent' => '#6272a4', // Cool Slate Blue
+                'accent-2' => '#8be9fd' // Cyan Accent
             ];
             break;
 
@@ -1339,22 +1330,22 @@ if (isset($_SESSION['preview_data']) && !$previewData) {
                 <a href="?apply_main_theme=forest" class="btn-apply-main" onclick="return confirm('Применить тему Лес к основному сайту?')">Применить к сайту</a>
             </div>
 
-            <!-- Фиолетовая мечта -->
-            <div class="template-card" style="background: linear-gradient(135deg, #f8f5ff 0%, #f0e6ff 100%); border: 2px solid #d4b3ff;">
+            <!-- Platinum -->
+            <div class="template-card" style="background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%); border: 2px solid #cccccc;">
                 <div class="template-preview">
                     <div style="display: flex; gap: 8px; margin-bottom: 12px;">
-                        <div style="width: 30px; height: 30px; border-radius: 6px; background: #f8f5ff; border: 1px solid #d4b3ff;"></div>
-                        <div style="width: 30px; height: 30px; border-radius: 6px; background: #2d1b3d;"></div>
-                        <div style="width: 30px; height: 30px; border-radius: 6px; background: #7b2cbf;"></div>
-                        <div style="width: 30px; height: 30px; border-radius: 6px; background: #9d4edd;"></div>
+                        <div style="width: 30px; height: 30px; border-radius: 6px; background: #f5f5f5; border: 1px solid #cccccc;"></div>
+                        <div style="width: 30px; height: 30px; border-radius: 6px; background: #222222;"></div>
+                        <div style="width: 30px; height: 30px; border-radius: 6px; background: #6272a4;"></div>
+                        <div style="width: 30px; height: 30px; border-radius: 6px; background: #8be9fd;"></div>
                     </div>
                 </div>
-                <h3 style="margin: 12px 0 8px; color: #2d1b3d;">💜 Фиолетовая мечта</h3>
-                <p style="font-size: 13px; color: #7f5a9f; margin: 0 0 15px;">Роскошная тема с фиолетовыми акцентами</p>
-                <a href="?apply_main_theme=purple" class="btn-apply-main" onclick="return confirm('Применить тему Фиолетовая мечта к основному сайту?')">Применить к сайту</a>
+                <h3 style="margin: 12px 0 8px; color: #222222;">💿 Platinum</h3>
+                <p style="font-size: 13px; color: #6c757d; margin: 0 0 15px;">A clean, modern theme with cool slate and cyan accents.</p>
+                <a href="?apply_main_theme=platinum" class="btn-apply-main" onclick="return confirm('Apply the Platinum theme to the main site?')">Apply to Site</a>
             </div>
 
-            <!-- Монохром -->
+            <!-- Monochrome -->
             <div class="template-card" style="background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%); border: 2px solid #cccccc;">
                 <div class="template-preview">
                     <div style="display: flex; gap: 8px; margin-bottom: 12px;">

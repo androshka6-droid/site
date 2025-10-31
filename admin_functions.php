@@ -107,8 +107,20 @@ function applyThemeToMainSite($themeVars, $fixTemplateOnce = true) {
     $grad1     = isset($themeVars['gradient-1'])   ? $themeVars['gradient-1']   : '#f5ecff';
     $grad2     = isset($themeVars['gradient-2'])   ? $themeVars['gradient-2']   : '#ece0ff';
 
-    $glow      = isset($themeVars['glow-shadow']) ? $themeVars['glow-shadow'] : '0 0 28px rgba(123,44,191,.35)';
+    // Convert brand color to RGB for the glow effect
+    $hex = str_replace('#', '', $brand);
+    if(strlen($hex) == 3) {
+        $r = hexdec(substr($hex,0,1).substr($hex,0,1));
+        $g = hexdec(substr($hex,1,1).substr($hex,1,1));
+        $b = hexdec(substr($hex,2,1).substr($hex,2,1));
+    } else {
+        $r = hexdec(substr($hex,0,2));
+        $g = hexdec(substr($hex,2,2));
+        $b = hexdec(substr($hex,4,2));
+    }
+    $glow_rgb = "$r,$g,$b";
 
+    $glow      = '0 0 28px rgba(' . $glow_rgb . ',.35)';
 
     // --- единый набор vars для сайта ---
     $mainSiteVars = array(
@@ -434,25 +446,31 @@ function generateCarCard($carData) {
     return $cardHtml;
 }
 
-// Добавление карточки в inventory
-function addCardToInventory($cardHtml) {
-    $inventoryHtml = file_get_contents('inventory.html');
-    $inventoryHtml = preg_replace(
-        '/(<div class="card-grid" id="inventoryGrid">)/',
-        '$1' . $cardHtml,
-        $inventoryHtml,
-        1
-    );
-    file_put_contents('inventory.html', $inventoryHtml);
-}
+// Обновление публичных страниц (inventory.html и index.php)
+function updatePublicListings() {
+    $db = loadDB('cars_db.json');
+    $inventoryTemplate = file_get_contents('inventory.template.html');
 
-// Удаление карточки из inventory
-function removeCardFromInventory($carId) {
-    $inventoryHtml = file_get_contents('inventory.html');
-    $inventoryHtml = preg_replace(
-        '/<a[^>]*data-car-id="' . preg_quote($carId, '/') . '"[^>]*>.*?<\/a>\n?/s',
-        '',
-        $inventoryHtml
-    );
-    file_put_contents('inventory.html', $inventoryHtml);
+    // Сортируем машины по убыванию (новые вверху)
+    krsort($db);
+
+    $allCardsHtml = "";
+    foreach ($db as $car) {
+        $allCardsHtml .= generateCarCard($car);
+    }
+
+    // Обновляем inventory.html
+    $newInventoryHtml = str_replace('{{CAR_GRID_PLACEHOLDER}}', $allCardsHtml, $inventoryTemplate);
+    file_put_contents('inventory.html', $newInventoryHtml);
+
+    // Обновляем index.php - теперь он будет статическим, обновляемым админкой
+    $indexTemplate = file_get_contents('index.template.html');
+    $featuredCars = array_slice($db, 0, 3);
+    $featuredCardsHtml = "";
+    foreach ($featuredCars as $car) {
+        $featuredCardsHtml .= generateCarCard($car);
+    }
+
+    $newIndexHtml = str_replace('{{FEATURED_CARS_PLACEHOLDER}}', $featuredCardsHtml, $indexTemplate);
+    file_put_contents('index.html', $newIndexHtml); // Сохраняем как index.html
 }

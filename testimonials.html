@@ -4,7 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Testimonials - Dean's Auto Sales</title>
-    <link rel="stylesheet" href="assets/css/styles.css" id="theme-stylesheet">
+    <script>
+        // Blocking script to prevent FOUC
+        (function() {
+            try {
+                var xhr = new XMLHttpRequest();
+                // Use a synchronous request for blocking behavior
+                xhr.open('GET', '/theme_version.txt', false);
+                xhr.send(null);
+                if (xhr.status === 200) {
+                    var version = xhr.responseText.trim();
+                    document.write('<link rel="stylesheet" href="assets/css/styles.css?v=' + version + '" id="theme-stylesheet">');
+                } else {
+                    // Fallback to timestamp if the request fails
+                    document.write('<link rel="stylesheet" href="assets/css/styles.css?v=' + new Date().getTime() + '" id="theme-stylesheet">');
+                }
+            } catch (e) {
+                console.error("Theme loader failed:", e);
+                // Fallback in case of any error
+                document.write('<link rel="stylesheet" href="assets/css/styles.css?v=' + new Date().getTime() + '" id="theme-stylesheet">');
+            }
+        })();
+    </script>
+    <noscript>
+        <link rel="stylesheet" href="assets/css/styles.css" id="theme-stylesheet">
+    </noscript>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
