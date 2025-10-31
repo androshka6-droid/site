@@ -125,7 +125,9 @@ if (isset($_POST['ajax_process_batch']) && isset($_POST['batch_index'])) {
         generateCarPage($carData);
 
         // Обновляем публичные страницы
-        updatePublicListings();
+        if ($batchIndex >= count($previewData) - 1) {
+            updatePublicListings();
+        }
 
         echo json_encode([
             'success' => true,
